@@ -25,6 +25,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
             override fun onResponse(call: retrofit2.Call<StudiosResponse>, response: retrofit2.Response<StudiosResponse>) {
                 val res: StudiosResponse? = response.body()
+
                 if (res!=null){
                     studiosResponse.value = res
                 }

@@ -21,5 +21,5 @@ interface ApiInterface {
     @GET("studios")
     fun getStudios(@Query("page_number") pageNumber:String,
                    @Query("latitude") latitude:String,
-                   @Query("page_nulongitudember") longitude:String ):Call<StudiosResponse>
+                   @Query("longitude") longitude:String ):Call<StudiosResponse>
 }

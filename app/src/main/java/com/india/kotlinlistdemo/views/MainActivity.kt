@@ -11,20 +11,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.india.kotlinlistdemo.R
 import com.india.kotlinlistdemo.adapter.StudioAdapter
 import com.india.kotlinlistdemo.databinding.ActivityMainBinding
 import com.india.kotlinlistdemo.view_model.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), StudioAdapter.OnItemClickListener {
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
 
@@ -39,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             }
         initObserver()
         initLocationManager()
+        sheetBehavior = BottomSheetBehavior.from<LinearLayout>(binding.bottomSheet)
     }
 
     private fun initLocationManager(){
@@ -57,13 +62,14 @@ class MainActivity : AppCompatActivity() {
    fun initObserver(){
      mainViewModel.studiosResponse.observe(this, androidx.lifecycle.Observer {
 
-         print("Size1 : "+it)
-         if(it.code==200){
-            binding.rvStudioList.apply {
-                adapter = StudioAdapter(it.data!!)
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            }
-         }
+        val aa = StudioAdapter(it.data!!)
+        binding.rvStudioList.apply {
+            adapter = aa
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+         aa.setOnItemClickListener(this)
+
      })
    }
 
@@ -77,8 +83,8 @@ class MainActivity : AppCompatActivity() {
                         requestNewLocationData()
                     } else {
                         mainViewModel.getStudiosApi("1",location.latitude.toString(),location.longitude.toString())
-                        Toast.makeText(this, location.latitude.toString()+" : "+location.longitude.toString(), Toast.LENGTH_SHORT).show();
-
+                        println("XXX : "+location.latitude.toString()+" : "+location.longitude.toString())
+                    //    Toast.makeText(this, location.latitude.toString()+" : "+location.longitude.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
             } else {
@@ -151,6 +157,20 @@ class MainActivity : AppCompatActivity() {
                 getLastLocation()
             }
         }
+    }
+
+    private fun expandCloseSheet() {
+        if (sheetBehavior!!.state != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+
+        } else {
+            sheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+
+        }
+    }
+
+    override fun onStudioClick(view: View, position: Int) {
+        expandCloseSheet()
     }
 
 }

@@ -1,25 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="viewModel" type="com.india.kotlinlistdemo.view_model.MainViewModel"/>
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="@color/light_gray">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".views.MainActivity">
+            android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_studio_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_studio_list"
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/bottom_sheet"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="200dp"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                app:behavior_hideable="true"
+                app:behavior_peekHeight="56dp"
+                app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+            <TextView
+                    android:id="@+id/tv_workout_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About"
+                    android:padding="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+            <TextView
+                    android:id="@+id/tv_workout_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="" />
+
+        </LinearLayout>
 
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
 

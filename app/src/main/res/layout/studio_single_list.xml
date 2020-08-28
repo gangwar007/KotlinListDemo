@@ -10,7 +10,9 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".views.MainActivity">
+            tools:context=".views.MainActivity"
+            android:padding="10dp"
+            android:id="@+id/rl_container">
 
         <LinearLayout
                 android:orientation="horizontal"
@@ -19,9 +21,10 @@
                 android:gravity="center" >
         <ImageView
                 android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@mipmap/ic_launcher"
+                app:imageUrl="@{viewModel.studio_logo}"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
